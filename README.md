@@ -1,4 +1,4 @@
-# terraform-cloudcli
+# Terraform with AWS,K8S CLIs
 
 Terraform docker image with AWS CLI & Kubernetes CLI
 
