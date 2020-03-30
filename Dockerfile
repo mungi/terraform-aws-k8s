@@ -15,7 +15,7 @@ ENV AWS_IAM_AUTH_FILE=https://github.com/kubernetes-sigs/aws-iam-authenticator/r
 RUN apk update && \
     apk -uv add --no-cache git curl jq groff bash && \
     apk -uv add --no-cache --virtual .build-deps gcc build-base libffi-dev openssl-dev && \
-    pip3 install --upgrade --no-cache-dir pip awscli && \
+    pip3 install --upgrade --no-cache-dir pip awscli ansible openshift && \
     apk del --no-network --no-cache .build-deps && \
     rm -rf /var/cache/apk/*
 
@@ -27,6 +27,7 @@ RUN wget -q -O- https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/te
 RUN KUBECTL_VERSION=$(wget --no-cache -qO- https://storage.googleapis.com/kubernetes-release/release/stable.txt) && \
     wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O /usr/bin/kubectl && chmod +x /usr/bin/kubectl && \
     wget -q -O- ${HELM_FILE} | tar xz && mv linux-amd64/helm /usr/bin/ && rm -rf linux-amd64  && \
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com/ && helm repo update && \
     wget -q ${AWS_IAM_AUTH_FILE} -O /usr/bin/aws-iam-authenticator && chmod +x /usr/bin/aws-iam-authenticator  && \
     wget -q -O- "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /usr/bin/
 
