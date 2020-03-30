@@ -13,7 +13,7 @@ ENV AWS_IAM_AUTH_FILE=https://github.com/kubernetes-sigs/aws-iam-authenticator/r
 
 # Install AWS CLI
 RUN apk update && \
-    apk -uv add --no-cache git curl jq groff && \
+    apk -uv add --no-cache git curl jq groff bash && \
     apk -uv add --no-cache --virtual .build-deps gcc build-base libffi-dev openssl-dev && \
     pip3 install --upgrade --no-cache-dir pip awscli && \
     apk del --no-network --no-cache .build-deps && \
